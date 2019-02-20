@@ -1,0 +1,11 @@
+com\longqi\sms\entity\ResCommonList.class
+com\longqi\sms\service\serviceImpl\SingleSmsSendServiceImpl.class
+com\longqi\sms\utils\HttpClientUtil.class
+com\longqi\sms\service\AppSecretService.class
+com\longqi\sms\SmsServiceApplication.class
+com\longqi\sms\contraller\SingleSendSmsContraller.class
+com\longqi\sms\entity\ApiSecret.class
+com\longqi\sms\entity\SingleSmsSendReq.class
+com\longqi\sms\service\SingleSmsSendService.class
+com\longqi\sms\service\serviceImpl\AppSecretServiceImpl.class
+com\longqi\sms\entity\ResponseCommon.class

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longqi.emailservice.dao.EmailItemMapper">
+    <resultMap id="BaseResultMap" type="com.longqi.emailservice.entity.EmailItem">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result column="email_address" property="emailAddress" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="email_user" property="emailUser" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="send_result" property="sendResult" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="is_success" property="isSuccess" javaType="java.lang.Boolean" jdbcType="BIT"/>
+        <result column="creat_time" property="creatTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="send_time" property="sendTime" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        <result column="index_id" property="indexId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, email_address, email_user, send_result, is_success, creat_time, send_time, index_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from email_item
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from email_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.longqi.emailservice.entity.EmailItem">
+    insert into email_item (id, email_address, email_user, 
+      send_result, is_success, creat_time, 
+      send_time, index_id)
+    values (#{id,jdbcType=BIGINT}, #{emailAddress,jdbcType=VARCHAR}, #{emailUser,jdbcType=VARCHAR}, 
+      #{sendResult,jdbcType=VARCHAR}, #{isSuccess,jdbcType=BIT}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{indexId,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.longqi.emailservice.entity.EmailItem">
+        insert into email_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="emailAddress != null">
+                email_address,
+            </if>
+            <if test="emailUser != null">
+                email_user,
+            </if>
+            <if test="sendResult != null">
+                send_result,
+            </if>
+            <if test="isSuccess != null">
+                is_success,
+            </if>
+            <if test="creatTime != null">
+                creat_time,
+            </if>
+            <if test="sendTime != null">
+                send_time,
+            </if>
+            <if test="indexId != null">
+                index_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="emailAddress != null">
+                #{emailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="emailUser != null">
+                #{emailUser,jdbcType=VARCHAR},
+            </if>
+            <if test="sendResult != null">
+                #{sendResult,jdbcType=VARCHAR},
+            </if>
+            <if test="isSuccess != null">
+                #{isSuccess,jdbcType=BIT},
+            </if>
+            <if test="creatTime != null">
+                #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="indexId != null">
+                #{indexId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.longqi.emailservice.entity.EmailItem">
+        update email_item
+        <set>
+            <if test="emailAddress != null">
+                email_address = #{emailAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="emailUser != null">
+                email_user = #{emailUser,jdbcType=VARCHAR},
+            </if>
+            <if test="sendResult != null">
+                send_result = #{sendResult,jdbcType=VARCHAR},
+            </if>
+            <if test="isSuccess != null">
+                is_success = #{isSuccess,jdbcType=BIT},
+            </if>
+            <if test="creatTime != null">
+                creat_time = #{creatTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="indexId != null">
+                index_id = #{indexId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.longqi.emailservice.entity.EmailItem">
+    update email_item
+    set email_address = #{emailAddress,jdbcType=VARCHAR},
+      email_user = #{emailUser,jdbcType=VARCHAR},
+      send_result = #{sendResult,jdbcType=VARCHAR},
+      is_success = #{isSuccess,jdbcType=BIT},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      index_id = #{indexId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <insert id="insertEmailItem" parameterType="com.longqi.emailservice.entity.EmailIndex">
+        insert into email_item (id, email_address, email_user,
+        send_result, is_success, creat_time,
+        send_time, index_id)
+        values
+        <foreach close="" collection="emailItems" index="id" item="item" open="" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.emailAddress,jdbcType=VARCHAR}, #{item.emailUser,jdbcType=VARCHAR},
+            #{item.sendResult,jdbcType=VARCHAR}, #{item.isSuccess,jdbcType=BIT}, #{item.creatTime,jdbcType=TIMESTAMP},
+            #{item.sendTime,jdbcType=TIMESTAMP}, #{item.indexId,jdbcType=BIGINT})
+        </foreach>
+
+    </insert>
+</mapper>

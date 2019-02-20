@@ -1,0 +1,70 @@
+#spring:
+#  cloud:
+#    config:
+#      name: smsservice
+#      label: master
+#      profile: test
+#      discovery:
+#        enabled: true
+#        service-id: config
+#eureka:
+#  instance:
+#    prefer-ip-address: true
+#  client:
+#    serviceUrl:
+#      defaultZone: http://212.64.11.93:8761/eureka/,http://111.231.66.26:8761/eureka/
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123329
+    url: jdbc:mysql://192.168.1.18:3306/emailService?serverTimezone=GMT%2B8
+  application:
+    name: smsService
+  boot:
+    admin:
+      client:
+        url: http://212.64.11.93:8084
+        instance:
+          prefer-ip: true
+          management-base-url: http://${eureka.instance.ip-address}:${server.port}
+          service-base-url: http://${eureka.instance.ip-address}:${server.port}
+  zipkin:
+    base-url: http://212.64.11.93:9411
+server:
+  port: 8777
+eureka:
+  instance:
+    ip-address: localhost
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://212.64.11.93:8761/eureka/,http://111.231.66.26:8761/eureka/
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+sms:
+  app-id: 8761804bc420438f868864db1b9f3c1f
+  account-sid: 2e949cee3a3ee2183f1f7e94badec8a4
+  auth-token: b856041d5397fb0b7e66b3641332d105
+  rest-url: https://open.ucpaas.com/ol/sms/
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-uri: http://localhost:7777/oauth/token_key
+    client:
+      client-id: sms_client
+      client-secret: longqi.123
+      access-token-uri: http://localhost:7777/oauth/token
+      grant-type: password,refresh_token
+      scope: server
+      user-authorization-uri: http://localhost:7777/oauth/authorize

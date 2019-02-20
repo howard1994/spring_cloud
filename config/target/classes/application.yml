@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: config
+  boot:
+    admin:
+      client:
+        url: http://212.64.11.93:8084
+        instance:
+          prefer-ip: true
+          management-base-url: http://${eureka.instance.ip-address}:${server.port}
+          service-base-url: http://${eureka.instance.ip-address}:${server.port}
+  zipkin:
+    base-url: http://212.64.11.93:9411
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: https://github.com/howard1994/cloudconfig.git
+          search-paths: "{application}"
+          username: howard1994
+          password: liumeng123329
+#    config:
+#      enabled: true
+#      server:
+#        svn:
+#          uri: http://18.221.15.194:8080/svn/longqiERP/pdaobject/cloudconfig
+#          search-paths: "{application}"
+#          username: liumeng
+#          password: ByWFXvwpVxM=
+#          default-label: config
+#  profiles:
+#    active: subversion
+eureka:
+  instance:
+    ip-address: 111.231.66.26
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://212.64.11.93:8761/eureka/,http://111.231.66.26:8761/eureka/
+server:
+  port: 8888
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,info

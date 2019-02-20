@@ -1,0 +1,5 @@
+com\longqi\emailservice\JsonModel\ResponseJsonModel.class
+com\longqi\emailservice\EmailServiceApplication.class
+com\longqi\emailservice\JsonModel\EmailUser.class
+com\longqi\emailservice\controller\TestController.class
+com\longqi\emailservice\JsonModel\EmailSingleSend.class

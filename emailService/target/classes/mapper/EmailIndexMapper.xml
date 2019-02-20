@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longqi.emailservice.dao.EmailIndexMapper">
+  <resultMap id="BaseResultMap" type="com.longqi.emailservice.entity.EmailIndex">
+      <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <result column="send_name" property="sendName" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="create_time" property="createTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <result column="send_time" property="sendTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <result column="creat_user" property="creatUser" javaType="java.lang.String" jdbcType="VARCHAR" />
+    <collection property="emailItems" ofType="EmailItemMap" select="getEmailItem" column="id">
+    </collection>
+  </resultMap>
+  <resultMap id="EmailItemMap" type="com.longqi.emailservice.entity.EmailItem">
+      <id column="id" property="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <result column="email_address" property="emailAddress" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="email_user" property="emailUser" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="send_result" property="sendResult" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <result column="is_success" property="isSuccess" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <result column="creat_time" property="creatTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <result column="send_time" property="sendTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <result column="index_id" property="indexId" javaType="java.lang.Long" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, send_name, create_time, send_time, creat_user
+  </sql>
+  <sql id="Base_Item_List">
+    id, email_address, email_user, send_result, is_success, creat_time, send_time, index_id
+  </sql>
+  <select id="getEmailItem" parameterType="java.lang.Long" resultMap="EmailItemMap">
+    select
+    <include refid="Base_Item_List" />
+    from email_item
+    where index_id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from email_index
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from email_index
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.longqi.emailservice.entity.EmailIndex">
+    insert into email_index (id, send_name, create_time, 
+      send_time, creat_user)
+    values (#{id,jdbcType=BIGINT}, #{sendName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{sendTime,jdbcType=TIMESTAMP}, #{creatUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.longqi.emailservice.entity.EmailIndex">
+    insert into email_index
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sendName != null">
+        send_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="sendTime != null">
+        send_time,
+      </if>
+      <if test="creatUser != null">
+        creat_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sendName != null">
+        #{sendName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatUser != null">
+        #{creatUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longqi.emailservice.entity.EmailIndex">
+    update email_index
+    <set>
+      <if test="sendName != null">
+        send_name = #{sendName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatUser != null">
+        creat_user = #{creatUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longqi.emailservice.entity.EmailIndex">
+    update email_index
+    set send_name = #{sendName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      send_time = #{sendTime,jdbcType=TIMESTAMP},
+      creat_user = #{creatUser,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
