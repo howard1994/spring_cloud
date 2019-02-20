@@ -1,7 +1,7 @@
 spring:
   cloud:
     config:
-      name: oauth
+      name: oauth2
       label: master
       profile: dev
       discovery:
